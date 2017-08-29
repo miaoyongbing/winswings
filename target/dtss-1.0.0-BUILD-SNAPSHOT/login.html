@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<title>登录注册界面</title>
+<style type="text/css">
+
+.form1{
+	background-color: #23305a;
+	z-index:1000;
+	width:300px;
+	height:auto;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:100px;
+	color:#2ec0f6;
+}
+.form1 form {padding:10px;}
+
+.input1{
+	width: 270px;
+	height: 30px;
+	margin: 25px 10px 0px 0px;
+}
+.input2{
+	width: 150px;
+	height: 30px;
+	margin: 25px 10px 0px 0px;
+}
+.input3[type="text"]{
+	width: 270px;
+	height: 30px;
+	margin: 10px 10px 0px 0px;
+}
+.input4[type="text"]{
+	width: 150px;
+	height: 30px;
+	margin: 10px 10px 0px 0px;
+}
+.button1 {
+	cursor: pointer;
+	width: 270px;
+	height: 44px;
+	margin-top: 10px;
+	padding: 0;
+	background: #2ec0f6;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	border: 1px solid #2ec0f6;
+	-moz-box-shadow:
+	0 15px 30px 0 rgba(255,255,255,.25) inset,
+	0 2px 7px 0 rgba(0,0,0,.2);
+	-webkit-box-shadow:
+	0 15px 30px 0 rgba(255,255,255,.25) inset,
+	0 2px 7px 0 rgba(0,0,0,.2);
+	box-shadow:
+	0 15px 30px 0 rgba(255,255,255,.25) inset,
+	0 2px 7px 0 rgba(0,0,0,.2);
+	font-family: 'PT Sans', Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	color: #fff;
+	text-shadow: 0 1px 2px rgba(0,0,0,.1);
+	-o-transition: all .2s;
+	-moz-transition: all .2s;
+	-webkit-transition: all .2s;-ms-transition: all .2s;    
+}
+.button2 {
+	cursor: pointer;
+	width: 100px;
+	height: 44px;
+	margin-top: 10px;
+	padding: 0;
+	background: #2ec0f6;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	border: 1px solid #2ec0f6;
+	-moz-box-shadow:
+	0 15px 30px 0 rgba(255,255,255,.25) inset,
+	0 2px 7px 0 rgba(0,0,0,.2);
+	-webkit-box-shadow:
+	0 15px 30px 0 rgba(255,255,255,.25) inset,
+	0 2px 7px 0 rgba(0,0,0,.2);
+	box-shadow:
+	0 15px 30px 0 rgba(255,255,255,.25) inset,
+	0 2px 7px 0 rgba(0,0,0,.2);
+	font-family: 'PT Sans', Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	color: #fff;
+	text-shadow: 0 1px 2px rgba(0,0,0,.1);
+	-o-transition: all .2s;
+	-moz-transition: all .2s;
+	-webkit-transition: all .2s;-ms-transition: all .2s;    
+}
+#d2{
+    position:absolute;
+    left:50%;
+    width:210px;
+    margin-left:-103px;
+    margin-top:10px;
+}
+#img1{
+    width: 100px;
+	height: 34px;
+	margin: 25px 10px 0px 0px;
+}
+#img2{
+    width: 100px;
+    height: 34px;
+    margin-top:10px;
+    margin-right:10px;
+}
+</style>
+<script type="text/javascript">
+<!--隐藏与显示-->
+function login(){
+	document.getElementById("login").style.display="block";
+	document.getElementById("register").style.display="none";
+	changeimg1();
+}
+function register(){
+	document.getElementById("login").style.display="none";
+	document.getElementById("register").style.display="block";
+	changeimg2();
+}
+
+<!--验证码变换-->
+function changeimg1(){
+	document.getElementById("img1").src="Code?"+Math.random();
+}
+function changeimg2(){
+	document.getElementById("img2").src="Code?"+Math.random();
+}
+
+<!--登录用户名检查-->
+function check11(){
+	if(document.getElementById("username1").value.length==0){
+		//alert("用户名不能为空");
+		document.getElementById("afteritcode").innerText="请输入用户名";
+		return false;
+	}
+	else{
+		document.getElementById("afteritcode").innerText="";
+		//AJAX检查用户名是否存在
+		var xmlhttp;
+		if (window.XMLHttpRequest){
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+		  	xmlhttp=new XMLHttpRequest();
+		}
+		else{
+			// code for IE6, IE5
+		  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function(){
+			if (xmlhttp.readyState==4 && xmlhttp.status==200){
+				if(xmlhttp.responseText=="true")
+					{
+					return true;
+					}
+					
+				else{
+					alert(xmlhttp.responseText);
+					return false;
+				}
+		    }
+		}
+		xmlhttp.open("GET","getcustomer.asp?q="+str,true);
+		xmlhttp.send();
+	}
+	return true;
+}
+
+<!--登录密码检查-->
+function check12(){
+	if(document.getElementById("password1").value.length==0){
+		document.getElementById("afterpassword").innerText="请输入密码";
+		//alert("密码不能为空");
+	}else{
+		document.getElementById("afterpassword").innerText="";
+		var xmlhttp;
+		if (window.XMLHttpRequest){
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+		  	xmlhttp=new XMLHttpRequest();
+		}
+		else{
+			// code for IE6, IE5
+		  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function(){
+			if (xmlhttp.readyState==4 && xmlhttp.status==200){
+				if(xmlhttp.responseText=="true")
+					{return true;}
+				else{
+					alert(xmlhttp.responseText);
+					return false;
+				}
+		    }
+		}
+		xmlhttp.open("GET","getcustomer.asp?q="+str,true);
+		xmlhttp.send();
+	}
+	return true;
+}
+
+<!--登录验证码检查-->
+function check13(){
+	if(document.getElementById("code1").value.length==0){
+		document.getElementById("aftervalicode").innerText="请输入验证码";
+		//return false;
+	}else{
+		document.getElementById("aftervalicode").innerText="";
+		var xmlhttp;
+		if (window.XMLHttpRequest){
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+		  	xmlhttp=new XMLHttpRequest();
+		}
+		else{
+			// code for IE6, IE5
+		  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		var valicode=document.getElementById("code1").value;
+		xmlhttp.open("get", "Valicode?valicode="+valicode);
+		xmlhttp.send(null);
+		xmlhttp.onreadystatechange=function(){
+			if (xmlhttp.readyState===4) {
+				if (xmlhttp.status===200) { 
+					if(xmlhttp.responseText=="true"){
+						document.getElementById("aftervalicode").innerText="";
+						return true;
+					}else{
+						document.getElementById("aftervalicode").innerText="验证码错误";
+						return false;
+					}
+				} else {
+					alert("发生错误：" + request.status);
+					return false;
+				}
+			} 
+		}
+	}
+	return true;
+}
+
+<!--注册验证码检查-->
+function check21(){
+	if(document.getElementById("username2").value.length==0){
+		//alert("用户名不能为空");
+		document.getElementById("afteritcode2").innerText="请输入账号";
+		
+		return false;
+	}else{
+		document.getElementById("afteritcode2").innerText="";
+		
+		var itcode=document.getElementById("username2").value;
+		var xmlhttp;
+		if (window.XMLHttpRequest){
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+		  	xmlhttp=new XMLHttpRequest();
+		}
+		else{
+			// code for IE6, IE5
+		  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function(){
+			if (xmlhttp.readyState==4 && xmlhttp.status==200){
+				if(xmlhttp.responseText=="true")
+					{return true;}
+				else{
+					document.getElementById("afteritcode2").innerText="此itcode已存在";
+					return false;
+				}
+		    }
+		}
+		xmlhttp.open("GET","Checkitcode?itcode="+itcode,true);
+		xmlhttp.send();
+		return true;
+	}
+	
+}
+
+<!--输入用户名=-->
+function check211(){
+	if(document.getElementById("username3").value.length==0){
+		//alert("用户名不能为空");
+		document.getElementById("afterusername2").innerText="请输入用户名";
+		return false;
+	}else{
+		document.getElementById("afterusername2").innerText="";
+		return true;
+	}
+	
+}
+
+
+<!--注册密码检查-->
+function check22(){
+	if(document.getElementById("password2").value.length==0){
+		//alert("密码不能为空");
+		document.getElementById("afterpassword2").innerText="请输入密码";
+		return false;
+	}else{
+		document.getElementById("afterpassword2").innerText="";
+		return true;
+	}
+	
+}
+
+<!--确认密码检查-->
+function check23(){
+	if(document.getElementById("password22").value.length==0){
+		//alert("确认密码不能为空");
+		document.getElementById("aftervalipassword2").innerText="请输入确认密码";
+		return false;
+	}else{
+		document.getElementById("aftervalipassword2").innerText="";
+		if(document.getElementById("password22").value==document.getElementById("password2").value)
+		{
+			return true;
+			document.getElementById("aftervalipassword2").innerText="";
+		}else{
+			document.getElementById("aftervalipassword2").innerText="密码不一致";
+			return false;
+		}
+			
+	}
+	return true;
+}
+
+<!--注册验证码检查-->
+function check24(){
+	if(document.getElementById("code2").value.length==0){
+		//alert("验证码不能为空");
+		document.getElementById("aftervalicode2").innerText="请输入验证码";
+		return false;
+	}else{
+		document.getElementById("aftervalicode2").innerText="";
+		var xmlhttp;
+	
+		if (window.XMLHttpRequest){
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+		  	xmlhttp=new XMLHttpRequest();}
+		else{
+			// code for IE6, IE5
+		  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		
+		var valicode=document.getElementById("code2").value;
+		
+		xmlhttp.open("get", "Valicode?valicode="+valicode);
+		xmlhttp.send(null);
+		xmlhttp.onreadystatechange=function(){
+			if (xmlhttp.readyState===4) {
+				if (xmlhttp.status===200) { 
+					if(xmlhttp.responseText=="true"){
+						document.getElementById("aftervalicode2").innerText="";
+						return true;
+					}else{
+						document.getElementById("aftervalicode2").innerText="验证码错误";
+						return false;
+					}
+				} else {
+					alert("发生错误：" + request.status);
+					return false;
+				}
+			} 
+		}
+		
+	}
+	return true;
+}
+	
+<!--登录检查-->
+function check1(){
+	if(check11()&&check12()&&check13()){
+		return true;
+	}
+	return false;
+}
+<!--注册检查-->
+
+function check2(){
+	if(check21()&check22()&check211()&check23()&check24()){	
+		//alert("注册成功");
+		
+		var xmlhttp;
+		if (window.XMLHttpRequest){
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+		  	xmlhttp=new XMLHttpRequest();}
+		else{
+			// code for IE6, IE5
+		  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		
+		var username=document.getElementById("username3").value;
+		var itcode=document.getElementById("username2").value;
+		var password=document.getElementById("password2").value;
+		xmlhttp.open("get", "AddUser?itcode2="+itcode+"&username2="+username+"&password2="+password);//
+		xmlhttp.send(null);
+		
+		xmlhttp.onreadystatechange=function(){
+			if (xmlhttp.readyState===4) {
+				if (xmlhttp.status===200) { 
+					if(xmlhttp.responseText=="true"){
+						alert("注册成功，请登录！");
+					}else{
+						
+						alert("注册失败");
+					}
+				} else {
+					alert("发生错误：" + request.status);
+					return false;
+				}
+			} 
+		}
+		return true;
+	}else{
+		alert("注册失败");
+		//return false;
+	}
+	
+}
+</script>
+
+<body style="background-image:url(image/3.jpg); background-repeat:no-repeat; background-size:cover">
+
+<div id="d2"><button type="button" class="button2" onclick="login()">登录</button>
+    <button type="button" class="button2" onclick="register()">注册</button>
+</div><br>
+
+<div class="form1" id="login">
+	<form id="form1" name="form1" method="get" action="vali.do" onsubmit="return check1()">
+		<h2 style="font-family:StLiti;margin:0px 40px;" >欢迎登录XXX系统</h2>
+		<div style="margin:5px 0px;" id="div1">
+			<input type="text" id="username1" class="input1" name="itcode" placeholder="请输入账号..." onblur="check11()"/><span id="afteritcode" style="color:red"></span>
+		</div>
+		<div style="margin:5px 0px;">
+			<input type="password" class="input1" id="password1" name="password" placeholder="请输入密码..." onblur="check12()"/><span id="afterpassword" style="color:red"></span>
+		</div>
+		<div style="margin:5px 0px;">
+			<input type="text" class="input2" id="code1" name="vali_code" placeholder="请输入验证码..." onblur="check13()"/>
+			<img id="img1" name="img1" style="float:right;" src="Code" onclick="changeimg1()" alt="点击更换"/><span id="aftervalicode" style="color:red"></span>
+		</div>
+		<button type="submit" class="button1">登<span style="width:20px;"></span>录</button>
+	</form>	
+</div>	
+
+
+
+<div class="form1" id="register" style="display:none">
+	 <form id="form2" name="form2" ><!-- method="get" action="" onsubmit="return check2()" -->
+		<h2 style="font-family:StLiti;margin:0px 40px;" >欢迎注册XXX系统</h2>
+		<div style="margin:5px 0px;">
+			<input type="text" class="input3" name="itcode2" id="username2"  placeholder="请输入账号..." onblur="check21()"/><span id="afteritcode2" style="color:red"></span>
+		</div>
+		<div style="margin:5px 0px;">
+			<input type="text" class="input3" id="username3" name="username2" placeholder="请输入名称..." onblur="check211()"/><span id="afterusername2" style="color:red"></span>
+		</div>
+		<div style="margin:5px 0px;">
+			<input  type="password" class="input3" id="password2" name="password2" placeholder="请输入密码..." onblur="check22()"/><span id="afterpassword2" style="color:red"></span>
+		</div>
+		<div style="margin:5px 0px;">
+			<input  type="password" class="input3" id="password22" placeholder="请确认密码..." onblur="check23()"/><span id="aftervalipassword2" style="color:red"></span>
+		</div>
+		<div style="margin:5px 0px;">
+			<input type="text" class="input4" id="code2" style="width:150px;" name="vali_code2" placeholder="请输入验证码..." onblur="check24()"/>
+			<img id="img2" name="img2" style="float:right;" src="Code?" onclick="changeimg2()" alt="点击更换"/><span id="aftervalicode2" style="color:red"></span>
+		</div>
+		
+		<button type="button" class="button1" onclick="check2()">注<span style="width:20px;"></span>册</button>
+	</form>
+</div>	
+<script type="text/javascript">
+changeimg1()
+</script>
+
+</body>
+</html>
